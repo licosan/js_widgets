@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body{
+                width: 60%;
+                margin: auto;
+                border-left: 1px dotted #777;
+                border-right: 1px dotted #777;
+                padding: 10px;
+                font-size:12px;             
+            }
+            h3{
+                text-decoration: underline;
+            }           
+            div.banner{
+                font-family: monospace;
+                font-weight: bold;
+                white-space: pre;
+                width:510px;
+                border-radius: 70px;
+                background-color: #DEA;
+                color: #070;
+                border: 4px double #070;
+                margin: auto;
+            }
+            div.codetype{
+                font-size: 12px;
+                background-color: #FFA;
+                width: 150px;
+                position: absolute;
+                top: -10px;
+                left: 10px;
+                border: 1px solid #AA0;
+                padding: 0 0 0 5px;
+                border-radius: 5px;
+                font-style: italic;
+                text-align: center;
+            }
+            div.code{
+                margin-top: 15px;
+                padding: 0px 0 10px 0;
+                position:relative;
+                font-family: monospace;
+                font-size:11px;
+                white-space: pre;
+                border:1px solid #AA0;
+                border-radius: 5px;
+                background-color:#FFD;
+            }
+            div.code b{
+                background-color: #FF0;
+            }
+            div.code i{
+                color: #080;
+                font-style: italic;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="banner">
+            _____
+           (     \ ____  ___  _____  ____  ____    __    ___ 
+           |  |   )_  _)/ __)(  _  )(  _ \( ___)  /__\  / __)
+           |    _/ _)(_( (__  )(_)(  )   / )__)  /(__)\( (__ 
+           (___)  (____)\___)(_____)(_)\_)(____)(__)(__)\___)
+                                                     By Nike
+        </div>
+        <h3>Summary</h3>
+        <p>Picoreac want to be a minimal, lightweight, easy reactive pico-framework written in vanilla ES6</p>
+        <h3>Basic usage</h3>
+        <div class="code">
+            <div class="codetype">HTML</div>
+        &lt;div <b>class='reactify'</b>&gt;
+            X: &lt;span style="color:blue;" <b>pr_get_from="x"</b>&gt;&lt;/span&gt;&lt;/span&gt;
+            &lt;div &gt;
+                &lt;input type="text" <b>pr_store_to="z"</b> size="3"&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        </div>
+        <div class="code">
+            <div class="codetype">Javascript</div>
+            var rn;
+            document.addEventListener('DOMContentLoaded', function () {
+                <span style="color:#A00;">rn = Picoreac({'reactable':'<b>reactify</b>'});</span><i>// DOM class of the components we make reactive</i>
+                setInterval(()=>{ <i>// let's display the time in the span...</i>
+                    <span style="color:#A00;">rn.data.x=</span>Date().substr(4,20); 
+                    console.log(<span style="color:#A00;">rn.data.z</span>); <i>// show that data.z has the value in the input</i>
+                }, 100);
+            }, false);
+        </div>    
+   
+        <h3>Parameters</h3>
+        <p>
+            <b>'reactable'</b> is a DOM class we use to mark DOM sub-tree we want to be reactive.<br>
+            Only nodes inside these containers can use reactive attributes.<br>
+            This is useful to build reactive components along-side other DOM parts for which we will be 100% non-intrusive.<br>
+            If not given, everything in the document can use reactive attributes.<br>
+        </p>
+        <h3>DOM Attributes</h3>        
+        <table>
+            <tr>
+                <td style="border-top:1px dotted #777;vertical-align: top;text-align:right;width:150px;font-weight:bold;">pr_get_from="x" :</td>
+                <td style="border-top:1px dotted #777;">This DOM element will get its value / content from instance.data.x</td>
+            </tr>
+            <tr>
+                <td style="border-top:1px dotted #777;vertical-align: top;text-align:right;width:150px;font-weight:bold;">pr_store_to="x" :</td>
+                <td style="border-top:1px dotted #777;">The value (or content) of this DOM element will be stored in instance.data.x</td>
+            </tr>
+            <tr>
+                <td style="border-top:1px dotted #777;vertical-align: top;text-align:right;width:150px;font-weight:bold;">pr_sync_with="x" :</td>
+                <td style="border-top:1px dotted #777;">Shortcut for ... pr_get_from="x" pr_sync_with="x"... to synchronize both ways.<br>
+                Caution: Using several pr_sync_with on the same variable for different inputs probably means you didn't take your pills this morning,
+                and it won't do because of a chicken & egg problem that I'm too lazy to solve.
+                </td>
+            </tr>
+            <tr>
+                <td style="border-top:1px dotted #777;vertical-align: top;text-align:right;width:150px;font-weight:bold;">pr_repeat_with="x" :</td>
+                <td style="border-top:1px dotted #777;">x must be a <b style="color:#A00;">{key:value} object</b>.<br>
+                The Dom element will then be cloned with the number of keys in the object.<br>
+                In each clone,  <b style="color:#A00;">{pr_key}</b> is replace by the key, and  <b style="color:#A00;">{pr_val}</b> is replaed by the value.
+                </td>
+            </tr>
+        </table>
+        <h3>Reactive variables</h3>
+        <ul>
+            <li>Variables are all under <b>[piroreac instance].data</b></li>
+            <li><b>pr_get_from</b> / <b>pr_sync_with</b> Normally expects a <b>String</b> or  <b>Number</b>.
+                However, when linking to a checkbox, an <b style="color:#A00;">Array</b> is mandatory.
+                Thanks to a good dose of voodoo, all <b style="color:#A00;">Array</b> manipulations methods (push, pop, shift...) are now reactive as well :-)<br>
+                Caution: Using an <b style="color:#A00;">Array</b> where String is expected will produce a comma separated list, that will be <u>converted back to a String</u>.
+            </li>
+            <li><b>pr_store_to</b> makes a <b>String</b>, except in a checkbox where it creates an <b>Array</b>.</li>
+        </ul>
+    </body>
+</html>        

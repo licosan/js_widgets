@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body{
+                width: 60%;
+                margin: auto;
+                border-left: 1px dotted #777;
+                border-right: 1px dotted #777;
+                padding: 10px;
+                font-size:12px;             
+            }
+            h3{
+                text-decoration: underline;
+            }
+            div.api_meth{
+                margin-left: 30px;
+                border-bottom: 1px dotted #777;
+                padding: 0 0 15px 0;
+                width: 70%;
+            }
+            h4.api_meth{
+                margin: 5px 0 0 20px;
+                background-color: #ccc;
+                padding: 2px 0 2px 10px;
+                font-weight: normal;
+            } 
+            div.api_meth_params{
+                color:#070;
+                margin: 5px 0 0 0;
+            }
+            div.api_meth_params ul{
+                margin:0 0 0 0;
+            }
+            div.banner{
+                font-family: monospace;
+                font-weight: bold;
+                white-space: pre;
+                width:510px;
+                border-radius: 70px;
+                background-color: #DEA;
+                color: #070;
+                border: 4px double #070;
+                margin: auto;
+            }
+            div.codetype{
+                font-size: 12px;
+                background-color: #FFA;
+                width: 150px;
+                position: absolute;
+                top: -10px;
+                left: 10px;
+                border: 1px solid #AA0;
+                padding: 0 0 0 5px;
+                border-radius: 5px;
+                font-style: italic;
+                text-align: center;
+            }
+            div.code{
+                margin-top: 15px;
+                padding: 0px 0 10px 0;
+                position:relative;
+                font-family: monospace;
+                font-size:11px;
+                white-space: pre;
+                border:1px solid #AA0;
+                border-radius: 5px;
+                background-color:#FFD;
+            }
+            div.code b{
+                background-color: #FF0;
+            }
+            div.code i{
+                color: #080;
+                font-style: italic;
+            }
+            b.parag{
+                display:block;               
+                color:#00A;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="banner">
+             _       __ 
+            (  \    /  )____  ____    ___  ____  ____  ___ 
+             \  \/\/  /(_  _)(  _ \  / __)( ___)(_  _)/ __)
+              )      (  _)(_  )(_) )( (_-. )__)   )(  \__ \
+             (___/\___)(____)(____/  \___/(____) (__) (___/
+                                                          By Nike
+        </div>
+        <h3>Summary</h3>
+        <p>Widgets is a minimalistic dynamic loader for js components (here called widgets).<br>
+        It avoids you all the constrains of (ES6) import (like CORS, module, etc), providing a clear an concise interface.<br>
+        Most importantly, it will take care of all dependencies for you, loading them as fast as possible,<br>
+        but <i>not too fast</i> not to break anything (for a detailed explanation of this, see "Dependencies management" below)
+        </p>
+        <h3>Usage: Starting an app...</h3>
+        <div class="code">
+            <div class="codetype">HTML</div>
+            &lt;script src="../../Widgets/Widgets.js"&gt; &lt;/script&gt; <i>&lt;!--The only script you'll load explicitly--&gt;</i>
+            &lt;script&gt;
+                document.addEventListener('DOMContentLoaded', function () { 
+                    <i>// Load the application "MyApp", located at "/myapppath/", 
+                    // which requires the widgets  "DynList" and "SortTable" 
+                    // => any widgets necessary for DynList or SortTable will automatically be taken care of.</i>
+                    <b>Widgets.loadApp(['MyApp', '/myapppath/'; ['DynList','SortTable'], function() {</b>
+                        console.log('Applications ready !');
+                        var myapp = <b>new Widget</b>('MyApp',
+                                    { 'param1':'value1',
+                                      'SortTableref' : new Widget('SortTable', {}),
+                                    });
+                    });
+                });
+            &lt;/script&gt;
+        </div>
+   
+        <h3>Usage: Load a single widget...</h3>
+        <div class="code">
+            <div class="codetype">HTML</div>
+            <b>Widgets.loadWidget</b>('Selector', function() {
+                console.log('Selector ready !');
+                var sel = <b>new Widget</b>('Selector', {'param1':'value1'});
+            });
+        </div>
+   
+        <h3>Usage: Load several widgets...</h3>
+        <div class="code">
+            <div class="codetype">HTML</div>
+            <b>Widgets.loadWidgets</b>(['Selector', 'DynList', 'AjaxTable'] , function() {
+                console.log('All widgets ready !');
+                var sel = <b>new Widget</b>('Selector', {'param1':'value1'});
+            });
+        </div>
+
+        <h3>Wigets API:</h3>
+        <h4 class="api_meth">Widgets.<b>loadApp</b>('MyApp', '/', ['widg1', widg2, widg3], callback)</h4>
+        <div class="api_meth">
+            Load a "top-level" application, outside of the widgets repository, requiring widgets in the list, then launch a callback when everything is ready.
+            <div class="api_meth_params">Parameters:
+                <ul>
+                    <li>Application name</li>
+                    <li>Application path (relative to the page)</li>
+                    <li>List of widget names (Array)</li>
+                    <li>Callback launched when all widgets are loaded.</li>
+                </ul>
+            </div>
+        </div>
+        <h4 class="api_meth">Widgets.<b>loadWidget</b>('widg1', callback)</h4>
+        <div class="api_meth">
+            Load one widget then launch a callback when it is ready.
+            <div class="api_meth_params">Parameters:
+                <ul>
+                    <li>Widget name (String)</li>
+                    <li>Callback launched when this widget is loaded.</li>
+                </ul>
+            </div>
+        </div>
+        <h4 class="api_meth">Widgets.<b>loadWidgets</b>(['widg1', widg2, widg3], callback)</h4>
+        <div class="api_meth">
+            Load several widgets then launch a callback when they are all ready.
+            <div class="api_meth_params">Parameters:
+                <ul>
+                    <li>List of widget names (Array)</li>
+                    <li>Callback launched when this widget is loaded.</li>
+                </ul>
+            </div>
+        </div>
+        <h4 class="api_meth">Widgets.<b>path</b> = '/path/to/widgets/';</h4>
+        <div class="api_meth">
+            Assign this if your widgets are not in the <b>default: '/Widgets/'</b>.<br>
+        </div>
+        <h4 class="api_meth">Widgets.<b>progressBar</b> = { 'top': '50px', 'width': '25%', 'height': '5px', 'class': 'widgets_pb' };</h4>
+        <div class="api_meth">
+            Assign this to customiez the progressbar.<br>
+            <b>defaults to: { 'top': '50px', 'width': '25%', 'height': '5px', 'class': 'widgets_pb' }</b><br>
+            If you don't want a progress bar, just assign <b>false</b>
+        </div>
+
+        <h3>Expected file structure and naming convention:</h3>
+        <p>
+        Your widget <b>classname</b> must be the same as the <b>script filename</b>(.js) containing its definition.<br>
+        The script file must then be placed under a <b>folder of the same name</b>, under your Widgets directory.<br>
+        Other files pertaining to you widget shall be kept in your widget directory.<br>
+        window.Widgets holds all widget classes. <br>
+        Its is mandatory to <b>assign your class to "window.Widgets" under the same name</b>, so that Widgets can instantiate it.<br>
+        Conversely, any "private" class you'd write shall be declared as usual (not assigned to window.Widgets)
+        </p>
+
+        <ul style="list-style:disclosure-open;">
+            <li>[folder] /Widgets<br>
+                <ul style="list-style:disclosure-open;">
+                    <li>[folder] MyDynamicList<br>
+                        <ul style="list-style:square;">
+                            <li>[file] MyDynamicList.js</li>
+                            <li>[...other files for this widget]</li>
+                        </ul>
+                    </li>
+                    <li>[folder] TableWidget<br>
+                        <ul>
+                            <li>[file] TableWidget.js</li>
+                            <li>[...other files for this widget]</li>
+                        </ul>
+                    </li>
+                    <li>[...other widgets folders]</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Widget boilerplate for MyDynamicList</h3>
+        <div class="code">
+            <div class="codetype">Javascript</div>
+            window.Widgets.<b>MyDynamicList</b> = class {  
+                constructor (options){
+
+                }
+            }
+        </div>
+        <h3>Dependencies management (TLDR;)</h3>
+        <p><b class="parag">You app is in a tree...</b>
+        Although Widgets can be used to "just load a couple of components",<br>
+        it was concieved with the idea that a complex client-side app shall be built as a large dependency tree.<br>
+        Your app is at the top, as it depends on all its components, which in turn depend on other components all the way down the tree.<br>
+        <img src="dep_tree.png" style="float:right;">
+        Some dependencies can of course be shared amonst different components (so it is therefore not a "<a target="_blank" href="https://en.wikipedia.org/wiki/Tree_(graph_theory)">rooted tree</a>" striclty speaking).<br>
+        </p>
+        <p><b class="parag">Fast but not too fast...</b>
+        Loading such tree of javascript scripts in memory is not so obvious if you want to keep it fast, while avoiding breaking a dependency (<i>not too fast</i>).<br>
+        Consider for example a component "Foo" defined as: <br><b>class Foo extends Bar { ... }</b><br>
+        Not only does Foo clearly depend on Bar at runtime, but also for it's very definition. 
+        Therefore, if Bar is defined in another -not yet loaded- file, the browser will throw a <i style="color:red;">ReferenceError: Bar is not defined</i>, just by loading this component's file.<br>
+        </p>
+        <p><b class="parag">How to load ?</b>
+        To avoid those errors, and by looking at the example tree on the right, we understand that the tree must be load "bottom-up".<br>
+        Now there are some subtleties in what "bottom-up" exaclty means... <br>
+        In the picture, components have been conveniently placed so they are "as high as possible on the graph (lowest level number)", while no arrow ever goes upwards.<br>
+        Consider for example the component "JsonMap":<br>
+        "DynaList" (level 2) depends on it, so you'd expect to see it on level 3, but as "AjaxTable" (level 3) depends on it too, it can't be placed higher that level 4.<br>
+        Assigning levels this way, and making sure there are no duplicates in the tree (tree shaking), we'll be able to load components in a safe way by loading the highest level-number first (bottom-most on the graph), 
+        down to level 1 (top of the graph).
+        </p>
+        <p><b class="parag">Sync o Async ?</b>
+        You could of course do this in a synchronous way, waiting for each component to be loaded before loading the next one in line.<br>
+        This is a bit like you're used to do when stacking all your &lt;script&gt; tags in the html: you make sure to place them in the proper order, and expect the browser to comply with that.<br>
+        However, when looking at the tree again, we notice that -by definition- there can never be any dependency horizontaly (in the same level).<br>
+        So, while levels shall be strictly loaded bottom-up and synchronously to avoid errors, conversely all components on the same level can be loaded asynchronously and in parallel (at browser discretion).<br>
+        </p>
+        <p><b class="parag">Widgets to the rescue</b>
+            Thanks for reading up to here, you can now forget it all ;-) because Widgets implements all these gory details for you.<br>
+            Based on the file "WidgetDependencies.json", it will build the needed tree for what you are asking, shake it, and load it bottom-up mixing sync and async as needed.
+            Just give your callback and it will be executed as soon as everything your requested is ready.
+        </p>
+    </body>
+</html>        

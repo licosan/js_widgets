@@ -1,0 +1,11 @@
+{
+    "Picoreac":[],
+    "Ressources":[],
+    "DynaList":["JsonMap"],
+    "SortTable":["AjaxTable"],
+    "AjaxTable":["DynaTable"],
+    "DynaTable":["Picoreac"],
+    "Charts":["AjaxCharts"],
+    "Toto":["FakeWidget"],
+    "FakeWidget":[]
+}

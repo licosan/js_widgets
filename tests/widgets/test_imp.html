@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <script src="/JS_components/Widgets/Widgets.js"></script>
+        <script>
+
+
+
+            Widgets.Path = '/JS_components/Widgets/';
+            var rn;
+            document.addEventListener('DOMContentLoaded', function () {
+
+                Widgets.loadWidgets(["DynaList","SortTable","Charts"], function() {
+                    console.log('All widgets ready!');
+                });
+
+                Widgets.loadWidget('Toto', function() {
+                    console.log('Widget Toto ready!');
+                });
+
+            });
+
+
+        </script>
+    </head>
+    <body>
+        <br>
+        Loading widgets...
+    </body>
+</html>

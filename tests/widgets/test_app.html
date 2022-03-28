@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <script src="/JS_components/Widgets/Widgets.js"></script>
+        <script>
+
+
+
+            Widgets.Path = '/JS_components/Widgets/';
+            var rn;
+            document.addEventListener('DOMContentLoaded', function () {
+
+                Widgets.loadApp('App', './', ["DynaList","SortTable","Charts"], function() {
+                    console.log('App ready!');
+                    tt = new Widget('App',{});
+                });
+
+
+            });
+
+
+        </script>
+    </head>
+    <body>
+        <br>
+        Loading app...
+    </body>
+</html>

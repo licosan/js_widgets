@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <script src="../../Widgets/Picoreac/Picoreac.js"></script>
+        <script>
+            var rn;
+            document.addEventListener('DOMContentLoaded', function () {
+                rn = new window.Widgets.Picoreac({'reactable':'reactify'});
+                //setInterval(()=>{ rn.data.x=Date().substr(4,20); }, 1000);
+            }, false);
+        </script>
+        <style>
+            .exampletbl{
+                border:1px double #AAA;
+            }
+            .exampletbl th{
+                background-color:#555;
+                color:#fff;
+                border:1px dotted #FFF;
+            }
+            .exampletbl td{
+                border:1px dotted #555;
+            }
+
+        </style>
+    </head>
+    <body>
+        <br>
+        <div style="margin-top:20px;width:800px" class='reactify'>
+            <span style="border:1px solid #AAA;margin-right:20px;">This is X: <span style="color:blue;" pr_get_from="x"></span></span>
+            <div style="width:400px;float:right;">
+                <input type="text" pr_store_to="z" size="3">(pr_store_to z)
+            </div>
+        </div>
+        <div style="margin-top:20px;width:800px;" class='reactify'>
+            <div style="clear:both;border: 1px dotted #777;margin:10px;height:70px;">
+                <span style="border:1px solid #AAA;margin-right:20px;">This is Y: <span style="color:blue;" pr_get_from="y"></span></span>
+                <div style="width:400px;float:right;">
+                    <input type="text" pr_store_to="y"  pr_get_from="y" size="3" value="default">
+                    (pr_store_to y)
+                </div>
+            </div>
+
+            <div style="clear:both;border: 1px dotted #777;margin:10px;height:70px;">
+                y used as value: <input type="text" size="3" value="" pr_get_from="y">
+                (pr_get_from, thus one-way)
+            </div>
+
+            <div style="clear:both;border: 1px dotted #777;margin:10px;height:70px;">
+                <span style="border:1px solid #AAA;margin-right:20px;">This is sel: <span style="color:blue;" pr_get_from="sel"></span></span>
+                <div style="width:400px;float:right;">
+                    <select pr_store_to="sel">
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                    (pr_store_to sel)
+                </div>
+            </div>
+
+            <div style="clear:both;border: 1px dotted #777;margin:10px;height:70px;">
+                <span style="border:1px solid #AAA;margin-right:20px;">This is lst: <span style="color:blue;" pr_get_from="lst"></span></span>
+                <div style="width:400px;float:right;">
+                    A<input type="checkbox" value="A" pr_sync_with="lst"><br>
+                    B<input type="checkbox" value="B" pr_sync_with="lst"><br>
+                    C<input type="checkbox" value="C" pr_sync_with="lst">                    
+                    (pr_store_to lst)
+                </div>
+            </div>
+
+            <div style="clear:both;border: 1px dotted #777;margin:10px;height: 70px;">
+                <span style="border:1px solid #AAA;margin-right:20px;">This is rad: <span style="color:blue;" pr_get_from="rad"></span></span>
+                <div style="width:250px;float:right;">
+                    A<input type="radio" name="gaga" value="A" pr_sync_with="rad"><br>
+                    B<input type="radio" name="gaga" value="B" pr_sync_with="rad"><br>
+                    C<input type="radio" name="gaga" value="C" pr_sync_with="rad">
+                    (pr_sync_with rad)
+                </div>
+            </div>
+
+            <div style="clear:both;border: 1px dotted #777;margin:10px;">
+                List from array (pr_repeat_from lst): 
+                <ul>
+                    <li style="color:red;">Static one</li>
+                    <li style="color:red;">Static two</li>
+                    <li pr_repeat_with="lst">{pr_key_} = {pr_prop}</li>
+                    <li style="color:red;">Static Last</li>
+                </ul>
+            </div>
+
+            <div style="clear:both;border: 1px dotted #777;margin:10px;">
+                Table from array (pr_repeat_from tbl): 
+                <table class="exampletbl">
+                    <tr><th>ID</th><th>X</th><th>Y1</th><th>Y2</th></tr>
+                    <tr pr_repeat_with="tbl"><td>{pr_key_}</td><td>{pr_prop.x}</td><td>{pr_prop.y.y1}</td><td>{pr_prop.y.y2}</td></tr>
+                </table>
+                <br><i>rn.data.tbl =  {'row1':{'x':'11','y':{'y1':99,'y2':98}}, 'row2':{'x':'22','y':{'y1':88,'y2':87}}, 'row3':{'x':'33','y':{'y1':77,'y2':76}}}</i>
+            </div>
+        </div>
+
+        <div style="margin-top:100px;border-top:1px dotted #777;">
+            Outside reactified containers, thus not sync with y: <span style="border:1px solid red;" pr_get_from="y">get_from is ignored here.</span>
+        </div>
+    </body>
+</html>
