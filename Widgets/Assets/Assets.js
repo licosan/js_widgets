@@ -44,7 +44,6 @@ window.Widgets.Assets = class Assets{
         document.querySelector(selector).prepend(Assets.GetImage(name));
     }
 
-
     static LoadCss(name){
         var node = document.createElement('link');
         node.setAttribute('rel','stylesheet');
@@ -69,7 +68,3 @@ const Asset = new Proxy(function(name, args){}, { // fake object, just to interc
         return(new window.Widgets[name](...args));
     }
 });
-
-
-
-<link rel="stylesheet" href="/s2040.css" type="text/css"></link>
