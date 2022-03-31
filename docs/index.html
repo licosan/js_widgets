@@ -56,10 +56,20 @@
                 color: #080;
                 font-style: italic;
             }
+            ul.links{
+                font-size: 14px;
+                list-style-type: disclosure-closed;
+            }
+            ul.links li{
+                margin: 0 0 5px 0;
+            }
+            ul.links li a{
+                text-decoration:none;
+            }
         </style>        
     </head>
     <body>
-        <div class="banner">
+        <div class="banner" style="width:600px;">
              ____  ___       _    _  ____  ____    ___  ____  ____  ___ 
             (_  _)/ __)     ( \/\/ )(_  _)(  _ \  / __)( ___)(_  _)/ __)
            .-_)(  \__ \ ___  )    (  _)(_  )(_) )( (_-. )__)   )(  \__ \
@@ -67,9 +77,13 @@
                                                                 By Nike
         </div>
         <h3>Docs for components :</h3>
-        <ul>
-            <li><a href="https://licosan.github.io/js_widgets/Picoreac_doc.html" target="_blank">Picoreac</a></li>
-            <li><a href="https://licosan.github.io/js_widgets/Widgets_doc.html" target="_blank">Widgets</a></li>
+        <ul class="links">
+            <li><a href="https://licosan.github.io/js_widgets/Widgets_doc.html" target="_blank">Widgets</a>
+                : The widgets loader.
+            </li>
+            <li><a href="https://licosan.github.io/js_widgets/Picoreac_doc.html" target="_blank">Picoreac</a>
+                : Use to build reactive components.
+            </li>
         </ul>
     </body>
 </html>        
