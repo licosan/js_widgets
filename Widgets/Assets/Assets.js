@@ -18,7 +18,7 @@ Get your copy of the GNU General Public License at <https://www.gnu.org/licenses
 'use strict'
 window.Widgets.AssetsStore = { 'images':{}, 'css':{}, 'html':{} };
 window.Widgets.Assets = class Assets{
-    static Path = '/Assets/';
+    static Path = Widgets.Path+'../Assets/';
 
     static GetImage(name){
         if(window.Widgets.AssetsStore.images.hasOwnProperty(name)) { // Image known
@@ -45,26 +45,47 @@ window.Widgets.Assets = class Assets{
     }
 
     static LoadCss(name){
+        if(window.Widgets.AssetsStore.css.hasOwnProperty(name)) return; 
         var node = document.createElement('link');
         node.setAttribute('rel','stylesheet');
         node.setAttribute('type','text/css');
+        if(!name.endsWith('.css')) name+='.css';
         node.setAttribute('href',Assets.Path+'css/'+name+'?'+crypto.randomUUID());
         document.head.append(node);
+        window.Widgets.AssetsStore.css[name] = node;
         return(node);
     }
 
-    static LoadHtml(name){
-        return(node);
+    static LoadHtml(name, callback){
+        if(!name.endsWith('.html')) name+='.html';
+        fetch(Assets.Path+'html/'+name+'?'+crypto.randomUUID())
+        .then(callback)
     }
+
+    static replaceHtml(name, selector){
+        Assets.LoadHtml(name, function(response){      
+            if(response.ok) document.querySelector(selector).innerHTML = response.text();
+            else console.error(response.status+' while loading asset:'+name);
+        });
+    }
+
+    static appendHtml(name, selector, element='div'){
+        var node = document.createElement(element);
+        Assets.LoadHtml(name, function(html){
+            node.innerHTML = html;
+        });
+        document.querySelector(selector).append(node);
+    }
+
+    static prependHtml(name, selector, element='div'){
+        var node = document.createElement(element);
+        Assets.LoadHtml(name, function(html){
+            node.innerHTML = html;
+        });     
+        document.querySelector(selector).prepend(node);
+    }    
 }
 
-const Asset = new Proxy(function(name, args){}, { // fake object, just to intercept "new Asset('whatever',...)"
-    construct(o, args){
-        var name = args.shift();
-        if(!(name in window.Widgets)) {
-            console.error('Widget '+name+' not imported !');
-            return({});
-        }
-        return(new window.Widgets[name](...args));
-    }
-});
+// TODO :
+// Internal indexing on names is not good
+// Allow subfolders under css, images & html

@@ -4,13 +4,20 @@
         <meta charset="utf-8">
         <script src="../../Widgets/Widgets.js"></script>
         <script>
+            
              document.addEventListener('DOMContentLoaded', function () { 
+                Widgets.Path = '/js_widgets/Widgets/';
                 Widgets.loadWidget('Assets', function() {
+                    window.Widgets.Assets.LoadCss('test');
+                    window.Widgets.Assets.appendImage('Nicsys.jpg', '#logo');
+                    window.Widgets.Assets.replaceHtml('loremipsum','#fillin');
                 });
              });
         </script>
     </head>
     <body>
         <div class="rouge">This is red if the asset style is loaded.</div>
+        <div id="logo"></div>
+        <div id="fillin" style="border:1px solid black;width:50%;">Box empty so far...</div>
     </body>
 </html>
