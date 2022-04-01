@@ -1,10 +1,10 @@
 /*
-    __                                 _____
-   /  \    ___  ___  ____  ____  ___  /  ___)____  _____  ____  ____ 
-  / __ \  / __)/ __)( ___)(_  _)/ __)(  /__ (_  _)(  _  )(  _ \( ___)
- / (__) \ \__ \\__ \ )__)   )(  \__ \ \__  \  )(   )(_)(  )   / )__) 
-(___)(___)(___/(___/(____) (__) (___/(______)(__) (_____)(_)\_)(____)
-                                                              By Nike
+    __  
+   /  \    ___  ___  ____  ____  ___  
+  / __ \  / __)/ __)( ___)(_  _)/ __)
+ / (__) \ \__ \\__ \ )__)   )(  \__ \ 
+(___)(___)(___/(___/(____) (__) (___/
+                               By Nike
                                                   
 This file is part of Widgets by Nike from Nicsys (info@@nicsys.eu).
 Widgets is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, 
@@ -58,14 +58,24 @@ window.Widgets.Assets = class Assets{
 
     static LoadHtml(name, callback){
         if(!name.endsWith('.html')) name+='.html';
-        fetch(Assets.Path+'html/'+name+'?'+crypto.randomUUID())
-        .then(callback)
+        if(window.Widgets.AssetsStore.html.hasOwnProperty(name)){
+            callback(window.Widgets.AssetsStore.html[name]);
+        } else {
+            fetch(Assets.Path+'html/'+name+'?'+crypto.randomUUID())
+            .then(response => response.text())
+            .then(html => {
+                window.Widgets.AssetsStore.html[name] = html;
+                callback(html);
+              })
+              .catch(error => {
+                console.error(error.status+' while loading asset:'+name);
+              });
+        }
     }
 
     static replaceHtml(name, selector){
-        Assets.LoadHtml(name, function(response){      
-            if(response.ok) document.querySelector(selector).innerHTML = response.text();
-            else console.error(response.status+' while loading asset:'+name);
+        Assets.LoadHtml(name, function(html){      
+            document.querySelector(selector).innerHTML = html;
         });
     }
 

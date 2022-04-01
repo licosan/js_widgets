@@ -101,37 +101,47 @@
         <h3>DOM Attributes</h3>        
         <table>
             <tr>
-                <td style="border-top:1px dotted #777;vertical-align: top;text-align:right;width:150px;font-weight:bold;">pr_get_from="x" :</td>
+                <td style="border-top:1px dotted #777;vertical-align: top;text-align:right;width:200px;font-weight:bold;">pr_get_from="x" :</td>
                 <td style="border-top:1px dotted #777;">This DOM element will get its value / content from instance.data.x</td>
             </tr>
             <tr>
-                <td style="border-top:1px dotted #777;vertical-align: top;text-align:right;width:150px;font-weight:bold;">pr_store_to="x" :</td>
+                <td style="border-top:1px dotted #777;vertical-align: top;text-align:right;width:200px;font-weight:bold;">pr_store_to="x" :</td>
                 <td style="border-top:1px dotted #777;">The value (or content) of this DOM element will be stored in instance.data.x</td>
             </tr>
             <tr>
-                <td style="border-top:1px dotted #777;vertical-align: top;text-align:right;width:150px;font-weight:bold;">pr_sync_with="x" :</td>
+                <td style="border-top:1px dotted #777;vertical-align: top;text-align:right;width:200px;font-weight:bold;">pr_sync_with="x" :</td>
                 <td style="border-top:1px dotted #777;">Shortcut for ... pr_get_from="x" pr_sync_with="x"... to synchronize both ways.<br>
                 Caution: Using several pr_sync_with on the same variable for different inputs probably means you didn't take your pills this morning,
                 and it won't do because of a chicken & egg problem that I'm too lazy to solve.
                 </td>
             </tr>
             <tr>
-                <td style="border-top:1px dotted #777;vertical-align: top;text-align:right;width:150px;font-weight:bold;">pr_repeat_with="x" :</td>
+                <td style="border-top:1px dotted #777;vertical-align: top;text-align:right;width:200px;font-weight:bold;">pr_repeat_with="obj_name" :</td>
                 <td style="border-top:1px dotted #777;">x must be a <b style="color:#A00;">{key:value} object</b>.<br>
-                The Dom element will then be cloned with the number of keys in the object.<br>
-                In each clone,  <b style="color:#A00;">{pr_key}</b> is replace by the key, and  <b style="color:#A00;">{pr_val}</b> is replaed by the value.
+                The Dom element will then be cloned for each key in the object.<br>
+                In each clone,  <b style="color:#A00;">{pr_key_}</b> is replaced by the  <b style="color:#A00;">key</b>,<br>
+                <b style="color:#A00;">{pr_prop}</b> is replaced by the value (thus <b style="color:#A00;">obj_name[key]</b>)<br>
+                Using dots, objects can be nested:<br>
+                <b style="color:#A00;">{pr_prop.p}</b> is replaced by the value of the property "p" for that key: <b style="color:#A00;">obj_name[key].p</b><br>
+                When nesting on several levels, just use several dots, like in normal JS:<br>
+                Example : <b style="color:#A00;">{pr_prop.coords.cartesian.y}</b> will look for the value of <b style="color:#A00;">obj_name[key].coords.cartesian.y</b>
                 </td>
             </tr>
         </table>
         <h3>Reactive variables</h3>
         <ul>
             <li>Variables are all under <b>[piroreac instance].data</b></li>
-            <li><b>pr_get_from</b> / <b>pr_sync_with</b> Normally expects a <b>String</b> or  <b>Number</b>.
-                However, when linking to a checkbox, an <b style="color:#A00;">Array</b> is mandatory.
-                Thanks to a good dose of voodoo, all <b style="color:#A00;">Array</b> manipulations methods (push, pop, shift...) are now reactive as well :-)<br>
-                Caution: Using an <b style="color:#A00;">Array</b> where String is expected will produce a comma separated list, that will be <u>converted back to a String</u>.
+            <li><b>Variable types:</b>
+                <ul>
+                    <li><b style="color:#A00;">String</b> or  <b style="color:#A00;">Number</b>: <b>pr_get_from, pr_store_to and pr_sync_with</b> normally expect a String or a Number.</li>
+                    <li><b style="color:#A00;">Array</b>: When using <b>pr_get_from, pr_store_to and pr_sync_with</b> on a checkbox, an array is mandatory.<br>
+                        Thanks to a good dose of voodoo, all <b style="color:#A00;">Array</b> manipulations methods (push, pop, shift...) are now reactive as well :-)<br>
+                        Caution: Using an <b style="color:#A00;">Array</b> where String is expected will produce a comma separated list, that will be <u>converted back to a String</u>                 
+                    </li>
+                    <li><b style="color:#A00;">{key:value} Object and nested objects</b>: <b>pr_repeat_with</b> expects a {key:value} object<br>
+                        However values can also be objects you can nest objects down this way (see above the dot notation for accessing properties)</li>
+                </ul>
             </li>
-            <li><b>pr_store_to</b> makes a <b>String</b>, except in a checkbox where it creates an <b>Array</b>.</li>
         </ul>
     </body>
 </html>        

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body{
+                width: 60%;
+                margin: auto;
+                border-left: 1px dotted #777;
+                border-right: 1px dotted #777;
+                padding: 10px;
+                font-size:12px;             
+            }
+            h3{
+                text-decoration: underline;
+            }
+            div.api_meth{
+                margin-left: 30px;
+                border-bottom: 1px dotted #777;
+                padding: 0 0 15px 0;
+                width: 70%;
+            }
+            h4.api_meth{
+                margin: 5px 0 0 20px;
+                background-color: #ccc;
+                padding: 2px 0 2px 10px;
+                font-weight: normal;
+            } 
+            div.api_meth_params{
+                color:#070;
+                margin: 5px 0 0 0;
+            }
+            div.api_meth_params ul{
+                margin:0 0 0 0;
+            }
+            div.banner{
+                font-family: monospace;
+                font-weight: bold;
+                white-space: pre;
+                width:510px;
+                border-radius: 70px;
+                background-color: #DEA;
+                color: #070;
+                border: 4px double #070;
+                margin: auto;
+            }
+            div.codetype{
+                font-size: 12px;
+                background-color: #FFA;
+                width: 150px;
+                position: absolute;
+                top: -10px;
+                left: 10px;
+                border: 1px solid #AA0;
+                padding: 0 0 0 5px;
+                border-radius: 5px;
+                font-style: italic;
+                text-align: center;
+            }
+            div.code{
+                margin-top: 15px;
+                padding: 0px 0 10px 0;
+                position:relative;
+                font-family: monospace;
+                font-size:11px;
+                white-space: pre;
+                border:1px solid #AA0;
+                border-radius: 5px;
+                background-color:#FFD;
+            }
+            div.code b{
+                background-color: #FF0;
+            }
+            div.code i{
+                color: #080;
+                font-style: italic;
+            }
+            b.parag{
+                display:block;               
+                color:#00A;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="banner">
+                   __  
+                  /  \    ___  ___  ____  ____  ___  
+                 / __ \  / __)/ __)( ___)(_  _)/ __)
+                / (__) \ \__ \\__ \ )__)   )(  \__ \ 
+               (___)(___)(___/(___/(____) (__) (___/
+                                              By Nike
+                                                  
+        </div>
+        <h3>Summary</h3>
+        <p> Assets aims to be a minimal, lightweight, assets manager. Assets can be Images, CSS files or HTML fragments.<br>
+            It just makes it easier to use or reuse any assets, in a centralized & consistent way.<br>
+            It also stores everything loaded in a central storage to avoid loading an asset twice from the network when reusing.
+        </p>
+        <h3>Basic usage</h3>
+        <div class="code">
+            <div class="codetype">HTML</div>
+            &lt;div class="rouge"&gt;This is red if the asset style is loaded.&lt;/div&gt;
+            &lt;div id="logo"&gt;&lt;/div&gt;
+            &lt;div id="fillin" style="border:1px solid black;width:50%;"&gt;Box empty so far...&lt;/div&gt;
+        </div>
+        <div class="code">
+            <div class="codetype">Javascript</div>
+            var rn;
+            document.addEventListener('DOMContentLoaded', function () {
+                <i>// Load and apply the stylesheet called "test.css" (in assets/css)</i>
+                window.Widgets.Assets.<span style="color:#A00;">LoadCss('test');</span>
+
+                <i>// Load the image called "Nicsys.jpg" (in assets/images), and add it to the #logo div</i>
+                window.Widgets.Assets.<span style="color:#A00;">appendImage('Nicsys.jpg', '#logo');</span>
+
+                <i>// Load the html fragment called "loreipsum.html" (in assets/html) anduse it as content for the #fillin div</i>
+                window.Widgets.Assets<span style="color:#A00;">.replaceHtml('loremipsum','#fillin');</span> 
+            }, false);
+        </div>    
+        <h3>Assets API:</h3>
+        <h4 class="api_meth">Assets.<b>LoadCss</b>('name')</h4>
+        <div class="api_meth">
+            Loads a stylesheet, and apply it as soon as it is available.
+            <div class="api_meth_params">Parameters:
+                <ul>
+                    <li>Stylesheet name (with or without the ".css")</li>
+                </ul>
+            </div>
+        </div>     
+        <h4 class="api_meth">Assets.<b>LoadHtml</b>(name, callback)</h4>
+        <div class="api_meth">
+            Loads an html fragment, and calls the callback with the html as parameter it as soon as it is available.
+            <div class="api_meth_params">Parameters:
+                <ul>
+                    <li>HTML fragment name (with or without the ".html")</li>
+                    <li>callback (with the html string as only parameter)</li>
+                </ul>
+            </div>
+        </div> 
+        <h4 class="api_meth">Assets.<b>replaceHtml</b>(name, selector)</h4>
+        <div class="api_meth">
+            Loads an html fragment, and replaces the content of the target element with it.
+            <div class="api_meth_params">Parameters:
+                <ul>
+                    <li>HTML fragment name (with or without the ".html")</li>
+                    <li>target element(s) selector</li>
+                </ul>
+            </div>
+        </div> 
+        <h4 class="api_meth">Assets.<b>appendHtml</b>(name, selector)</h4>
+        <div class="api_meth">
+            Loads an html fragment, and appends the content at the end of the target element with it.
+            <div class="api_meth_params">Parameters:
+                <ul>
+                    <li>HTML fragment name (with or without the ".html")</li>
+                    <li>target element(s) selector</li>
+                </ul>
+            </div>
+        </div> 
+        <h4 class="api_meth">Assets.<b>prependHtml</b>(name, selector)</h4>
+        <div class="api_meth">
+            Loads an html fragment, and appends the beginning at the end of the target element with it.
+            <div class="api_meth_params">Parameters:
+                <ul>
+                    <li>HTML fragment name (with or without the ".html")</li>
+                    <li>target element(s) selector</li>
+                </ul>
+            </div>
+        </div>                 
+        <h4 class="api_meth">Assets.<b>GetImage</b>(name)</h4>
+        <div class="api_meth">
+            Loads an image, and returns an image node.<br>
+            If you call it again on the same image, it will clone the original node and return the clone (without reloading the image), 
+            so you could use the image a two separate plaaces..
+            <div class="api_meth_params">Parameters:
+                <ul>
+                    <li>Image name</li>
+                </ul>
+            </div>
+        </div>   
+        <h4 class="api_meth">Assets.<b>appendImage</b>(name, selector)</h4>
+        <div class="api_meth">
+            Loads an image, and appends it at the end of the target element.
+            <div class="api_meth_params">Parameters:
+                <ul>
+                    <li>Image name</li>
+                    <li>target element(s) selector</li>
+                </ul>
+            </div>
+        </div> 
+        <h4 class="api_meth">Assets.<b>prependImage</b>(name, selector)</h4>
+        <div class="api_meth">
+            Loads an image, and appends it at the beginning of the target element.
+            <div class="api_meth_params">Parameters:
+                <ul>
+                    <li>Image name</li>
+                    <li>target element(s) selector</li>
+                </ul>
+            </div>
+        </div>                  
+    </body>
+</html>        
