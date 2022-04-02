@@ -17,7 +17,7 @@ Get your copy of the GNU General Public License at <https://www.gnu.org/licenses
 */
 'use strict'
 window.Widgets.AssetsStore = { 'images':{}, 'css':{}, 'html':{} };
-window.Widgets.Assets = class Assets{
+var Assets = window.Widgets.Assets = class {
     static Path = Widgets.Path+'../Assets/';
 
     static GetImage(name){
@@ -95,6 +95,7 @@ window.Widgets.Assets = class Assets{
         document.querySelector(selector).prepend(node);
     }    
 }
+
 
 // TODO :
 // Internal indexing on names is not good
