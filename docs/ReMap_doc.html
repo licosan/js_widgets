@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body{
+                width: 60%;
+                margin: auto;
+                border-left: 1px dotted #777;
+                border-right: 1px dotted #777;
+                padding: 10px;
+                font-size:12px;             
+            }
+            h3{
+                text-decoration: underline;
+            }
+            div.api_meth{
+                margin-left: 30px;
+                border-bottom: 1px dotted #777;
+                padding: 0 0 15px 0;
+                width: 70%;
+            }
+            h4.api_meth{
+                margin: 5px 0 0 20px;
+                background-color: #ccc;
+                padding: 2px 0 2px 10px;
+                font-weight: normal;
+            } 
+            div.api_meth_params{
+                color:#070;
+                margin: 5px 0 0 0;
+            }
+            div.api_meth_params ul{
+                margin:0 0 0 0;
+            }
+            div.banner{
+                font-family: monospace;
+                font-weight: bold;
+                white-space: pre;
+                width:450px;
+                border-radius: 70px;
+                background-color: #DEA;
+                color: #070;
+                border: 4px double #070;
+                margin: auto;
+            }
+            div.codetype{
+                font-size: 12px;
+                background-color: #FFA;
+                width: 150px;
+                position: absolute;
+                top: -10px;
+                left: 10px;
+                border: 1px solid #AA0;
+                padding: 0 0 0 5px;
+                border-radius: 5px;
+                font-style: italic;
+                text-align: center;
+            }
+            div.code{
+                margin-top: 15px;
+                padding: 0px 0 10px 0;
+                position:relative;
+                font-family: monospace;
+                font-size:11px;
+                white-space: pre;
+                border:1px solid #AA0;
+                border-radius: 5px;
+                background-color:#FFD;
+            }
+            div.code b{
+                background-color: #FF0;
+            }
+            div.code i{
+                color: #080;
+                font-style: italic;
+            }
+            b.parag{
+                display:block;               
+                color:#00A;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="banner">
+             _____          ___  ___
+            (     \  ____  (   ) (  )   __    ____ 
+            \  |   )( ___) (   \/   )  /__\  (  _ \
+             )   _/  )__)  (        ) /(__)\  )___/
+            (__)\_) (____) (_/\ /\_ )(__)(__)(__)  
+                                           By Nike
+                                                  
+        </div>
+        <h3>Summary</h3>
+        <p> ReMap lets you easily remap an array of objects (here called a dataset of records) to another one, changing its structure, 
+            changing propreties names and recomputing properties.<br>
+            Typical use case arrises when receiving some Json structure from a server, which does not fit the structure you need for your app.<br>
+        </p>
+        <h3>Basic usage</h3>
+        <div class="code">
+            <div class="codetype">Javascript</div>
+            <i>// Some example data...</i>
+            var persons = [
+                { "person" :  { "firstname": "Toto", "middlename": "lapraline", "familyname": "Piperzeel"},
+                  "address" : { "city": { "name": "Bruxelles", "code": "1000" },
+                                "street": {"name": "Avenue du pépin", "number": "4" },
+                              }
+                },
+                { "person" :  { "firstname": "Eliot", "middlename": "Charles", "familyname": "Ness"},
+                  "address" : { "city": { "name": "London", "code": "12334ABC" },
+                                "street": {"name": "Sezam street", "number": "99" },
+                              }
+                },                
+            ];
+
+            document.addEventListener('DOMContentLoaded', function () {
+                Widgets.loadWidget('ReMap', function() {
+                    <i>// Define a new mapping...</i>
+                    persons_mapper = new Widget( 'ReMap', {
+                            'zip': 'address.city.code', 
+                            'city': 'address.city.name',
+                            'address': (record, dataset, idx) => record.address.street.number+', '+record.address.street.name,
+                            'firstname': 'person.firstname',
+                            'lastname':  'person.familyname',
+                            'fullname': (record, dataset, idx) => 
+                                            record.person.firstname+' '+record.person.middlename+' '+record.person.familyname,
+                            'position': (record, dataset, idx) => (parseInt(idx)+1)+'/'+dataset.length,
+                    });
+                    <i>// Now use it on the data</i>
+                    console.log(persons_mapper(persons));
+                });
+            }, false);
+        </div>    
+        <h3>ReMap API:</h3>
+        <div class="api_meth">
+            <p>Just instantiate with the map as single argument.<br>
+            The instance is in fact a mapper function you the use on data as many times as you want.</p>
+            <p>The map is a key:value object where the keys are the keys of the destination object (mapped records), 
+            and the values are the "recipe" to get or compute that new property: it can be either a path to the original property in the mapped object,
+            or a function that will produce the new property.</p>
+            <div class="api_meth_params">MAP values:
+                <ul>
+                    <li><b>String</b>: The path of the source property in the records, in dot notation.</li>
+                    <li><b>Function</b>: A function that produces the value of this property.<br>
+                        Functions always receive as parameters: record, dataset an index.<br>
+                        <ul>
+                            <li><b>record:</b> is the current record (entry of the Array)</li>
+                            <li><b>dataset:</b> is the while set of records (the complete Array.<br>
+                            This is usefull when computing things like totals, averages etc</li>
+                            <li><b>index:</b> The current index (integer) of this record (entry) in the dataset (Array)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>     
+               
+    </body>
+</html>        

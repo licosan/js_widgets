@@ -1,6 +1,7 @@
 {
     "Picoreac":[],
-    "Ressources":[],
+    "Assets":[],
+    "ReMap":[],
     "DynaList":["JsonMap"],
     "SortTable":["AjaxTable"],
     "AjaxTable":["DynaTable"],

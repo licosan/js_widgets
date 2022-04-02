@@ -23,7 +23,7 @@ class Widgets{
     static DependenciesLoader = false;
     static ProgBar = false;
     constructor(options){
-        console.log('constructing...');
+        return(null);
     }
     static resolve_deps(imps, deps){
         var leveler = (levels, root, l, trail=[]) => { 

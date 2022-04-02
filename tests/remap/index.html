@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <script src="../../Widgets/Widgets.js"></script>
+        <script>
+            persons = [
+                { "person" :  { "firstname": "Toto", "middlename": "lapraline", "familyname": "Piperzeel"},
+                  "address" : { "city": { "name": "Bruxelles", "code": "1000" },
+                                "street": {"name": "Avenue du pépin", "number": "4" },
+                              }
+                },
+                { "person" :  { "firstname": "Eliot", "middlename": "Charles", "familyname": "Ness"},
+                  "address" : { "city": { "name": "London", "code": "12334ABC" },
+                                "street": {"name": "Sezam street", "number": "99" },
+                              }
+                },                
+            ];
+
+
+            document.addEventListener('DOMContentLoaded', function () { 
+                Widgets.Path = '/js_widgets/Widgets/';
+                Widgets.loadWidget('ReMap', function() {
+                    persons_mapper = new Widget( 'ReMap', {
+                                                    'zip': 'address.city.code',
+                                                    'city': 'address.city.name',
+                                                    'address': (record, dataset, idx) => record.address.street.number+', '+record.address.street.name,
+                                                    'firstname': 'person.firstname',
+                                                    'lastname':  'person.familyname',
+                                                    'fullname': (record, dataset, idx) => record.person.firstname+' '+record.person.middlename+' '+record.person.familyname,
+                                                    'position': (record, dataset, idx) => (parseInt(idx)+1)+'/'+dataset.length,
+                                            });
+                    console.log(persons_mapper(persons));
+                });
+             });
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
