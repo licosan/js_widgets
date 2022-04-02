@@ -149,10 +149,14 @@ window.Widgets.Picoreac = class{
                     var new_node = document.createElement(el.tagName); 
                     var html = template.replace(re1, key);
                     html = html.replace(re2, (match) => {
-                        var props = match.substr(9,match.length-10).split('.');
-                        var acc=newval[key]; 
-                        for(var p of props) { acc=acc[p]; }
-                        return(acc);
+                        if(match.substr(9,match.length-10)!=''){ // pr_prop.x.y.z
+                            var props = match.substr(9,match.length-10).split('.');
+                            var acc=newval[key]; 
+                            for(var p of props) { acc=acc[p]; }
+                            return(acc);
+                        } else { // just pr_prop (no dot somthing)
+                            return(newval[key]);
+                        }
                     }); 
                     el.insertAdjacentElement('afterend', new_node);
                     new_node.outerHTML = html;

@@ -2,12 +2,15 @@
 <html lang="en-US">
     <head>
         <meta charset="utf-8">
-        <script src="../../Widgets/Picoreac/Picoreac.js"></script>
+        <script src="../../Widgets/Widgets.js"></script>
         <script>
             var rn;
             document.addEventListener('DOMContentLoaded', function () {
-                rn = new window.Widgets.Picoreac({'reactable':'reactify'});
-                //setInterval(()=>{ rn.data.x=Date().substr(4,20); }, 1000);
+                Widgets.Path = '/js_widgets/Widgets/';
+                Widgets.loadWidget('Picoreac', function() {
+                    rn = new Widget('Picoreac',{'reactable':'reactify'});
+                    //setInterval(()=>{ rn.data.x=Date().substr(4,20); }, 1000);
+                });
             }, false);
         </script>
         <style>
@@ -90,12 +93,21 @@
             </div>
 
             <div style="clear:both;border: 1px dotted #777;margin:10px;">
-                Table from array (pr_repeat_from tbl): 
+                Table from Array (pr_repeat_from tblarr): 
+                <table class="exampletbl">
+                    <tr><th>Index</th><th>Value</th></tr>
+                    <tr pr_repeat_with="tblarr"><td>{pr_key_}</td><td>{pr_prop}</td></tr>
+                </table>
+                <br><i>rn.data.tblarr =  ['line 0', 'line 1', 'line 2', 'line 3']</i>
+            </div>
+
+            <div style="clear:both;border: 1px dotted #777;margin:10px;">
+                Table from Object (pr_repeat_from tblobj): 
                 <table class="exampletbl">
                     <tr><th>ID</th><th>X</th><th>Y1</th><th>Y2</th></tr>
-                    <tr pr_repeat_with="tbl"><td>{pr_key_}</td><td>{pr_prop.x}</td><td>{pr_prop.y.y1}</td><td>{pr_prop.y.y2}</td></tr>
+                    <tr pr_repeat_with="tblobj"><td>{pr_key_}</td><td>{pr_prop.x}</td><td>{pr_prop.y.y1}</td><td>{pr_prop.y.y2}</td></tr>
                 </table>
-                <br><i>rn.data.tbl =  {'row1':{'x':'11','y':{'y1':99,'y2':98}}, 'row2':{'x':'22','y':{'y1':88,'y2':87}}, 'row3':{'x':'33','y':{'y1':77,'y2':76}}}</i>
+                <br><i>rn.data.tblobj =  {'row1':{'x':'11','y':{'y1':99,'y2':98}}, 'row2':{'x':'22','y':{'y1':88,'y2':87}}, 'row3':{'x':'33','y':{'y1':77,'y2':76}}}</i>
             </div>
         </div>
 
