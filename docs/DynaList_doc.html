@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body{
+                width: 60%;
+                margin: auto;
+                border-left: 1px dotted #777;
+                border-right: 1px dotted #777;
+                padding: 10px;
+                font-size:12px;             
+            }
+            h3{
+                text-decoration: underline;
+            }
+            div.api_meth{
+                margin-left: 30px;
+                border-bottom: 1px dotted #777;
+                padding: 0 0 15px 0;
+                width: 70%;
+            }
+            h4.api_meth{
+                margin: 5px 0 0 20px;
+                background-color: #ccc;
+                padding: 2px 0 2px 10px;
+                font-weight: normal;
+            } 
+            div.api_meth_params{
+                color:#070;
+                margin: 5px 0 0 0;
+            }
+            div.api_meth_params ul{
+                margin:0 0 0 0;
+            }
+            div.banner{
+                font-family: monospace;
+                font-weight: bold;
+                white-space: pre;
+                width:510px;
+                border-radius: 70px;
+                background-color: #DEA;
+                color: #070;
+                border: 4px double #070;
+                margin: auto;
+            }
+            div.codetype{
+                font-size: 12px;
+                background-color: #FFA;
+                width: 150px;
+                position: absolute;
+                top: -10px;
+                left: 10px;
+                border: 1px solid #AA0;
+                padding: 0 0 0 5px;
+                border-radius: 5px;
+                font-style: italic;
+                text-align: center;
+            }
+            div.code{
+                margin-top: 15px;
+                padding: 0px 0 10px 0;
+                position:relative;
+                font-family: monospace;
+                font-size:11px;
+                white-space: pre;
+                border:1px solid #AA0;
+                border-radius: 5px;
+                background-color:#FFD;
+            }
+            div.code b{
+                background-color: #FF0;
+            }
+            div.code i{
+                color: #080;
+                font-style: italic;
+            }
+            b.parag{
+                display:block;               
+                color:#00A;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="banner">
+             _____                       __ 
+            (   _ \  _  _  _  _    __   (  )   ____  ___  ____ 
+             \ ( ) )( \/ )( \( )  /__\   )(   (_  _)/ __)(_  _)
+             / (_) ) \  /  )  (  /(__)\  )(__  _)(_ \__ \  )(  
+            (_____/  (__) (_)\_)(__)(__)(____)(____)(___/ (__) 
+                                                       By Nike
+                                                  
+        </div>
+        <h3>Summary</h3>
+        <p> Quick and dirty &lt;ul&gt; reactive list.<br>
+            Mainly to be used as as real widget example in other tests.
+        </p>
+        <h3>Basic usage</h3>
+        <div class="code">
+            <div class="codetype">HTML</div>
+            &lt;div id="listbox" style="border: 1px solid blue;width: 30%;"&gt;Here comes the list...&lt;/div&gt;
+        </div>
+        <div class="code">
+            <div class="codetype">Javascript</div>
+            var Users = [   { "id": "32164", "name": "Toto" },
+                        { "id": "78645", "name": "Tintin" },
+                        { "id": "49642", "name": "Milou" },
+                        { "id": "75244", "name": "Sheldon" },
+                        { "id": "45668", "name": "Leonard" },                           
+            ];
+
+            document.addEventListener('DOMContentLoaded', function () { 
+                Widgets.loadWidget('DynaList', function() {
+                    <span style="background-color:#FF0">usr_lst = new Widget( 'DynaList', { </span>
+                    <span style="background-color:#FF0">    'selector': '#listbox',</span>
+                    <span style="background-color:#FF0">    'source': Users, </span>
+                    <span style="background-color:#FF0">    'id':'usrlst', </span>
+                    <span style="background-color:#FF0">    'entry_id': 'id',</span>
+                    <span style="background-color:#FF0">    'entry_label': 'name',</span>
+                    <span style="background-color:#FF0">});</span>
+
+                });
+             });
+        </div>    
+        <h3>DynaList API:</h3>
+        <h4 class="api_meth">Instanciation :</h4>
+        <div class="api_meth">
+            <div class="api_meth_params">Parameters:
+                <ul>
+                    <li><b>selector</b>: list parent selector</li>
+                    <li><b>source</b>: the array containing the list elements</li>
+                    <li><b>id</b>: Both the DOM id of the &lt;ul&gt; and the suffix of the variable used in Picoreac</li>
+                    <li><b>entry_id</b>: Each &lt;li&gt; will have an "item_id" attribute, with the value of the entry_id named property for this array entry </li>
+                    <li><b>entry_label</b>: The text of each &lt;li&gt; will picked from the value of the entry_label named property for this array entry </li>
+                </ul>
+            </div>
+        </div>     
+        
+    </body>
+</html>        
