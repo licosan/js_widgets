@@ -19,7 +19,7 @@ Get your copy of the GNU General Public License at <https://www.gnu.org/licenses
 window.Widgets.Picoreac = class{
     constructor (options){
         console.log('Picoreac started...');
-        this.containers_selector = (typeof(options.reactable)=='undefined') ? '' : '.'+options.reactable ;
+        this.containers_selector = (typeof(options.reactable)=='undefined') ? '' : options.reactable ;
         this.init_data();
         this.init_react_elements();
     }
@@ -85,11 +85,11 @@ window.Widgets.Picoreac = class{
                     }
                     return(result);
                 },
-                get(o, varname, rcv){
+                get(o, varname, rcv){ 
                     if(typeof(o[varname]) === 'function') {
                         return(Reflect.get(o, varname, rcv)); // Dont break native methods
                     }
-                    if((typeof(self.react_up_elements[varname])!='undefined') &&  (typeof(o[varname])!=='object')) {
+                    if( (typeof(self.react_up_elements[varname])!='undefined') &&  ((typeof(o[varname])!=='object') || Array.isArray(o[varname]))) {
                         return(self.get_from_dom(o, varname));
                     } else { 
                         return(Reflect.get(o, varname, rcv));

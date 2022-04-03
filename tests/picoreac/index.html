@@ -8,7 +8,7 @@
             document.addEventListener('DOMContentLoaded', function () {
                 Widgets.Path = '/js_widgets/Widgets/';
                 Widgets.loadWidget('Picoreac', function() {
-                    rn = new Widget('Picoreac',{'reactable':'reactify'});
+                    rn = new Widget('Picoreac',{'reactable':'.reactify'});
                     //setInterval(()=>{ rn.data.x=Date().substr(4,20); }, 1000);
                 });
             }, false);
@@ -63,12 +63,12 @@
             </div>
 
             <div style="clear:both;border: 1px dotted #777;margin:10px;height:70px;">
-                <span style="border:1px solid #AAA;margin-right:20px;">This is lst: <span style="color:blue;" pr_get_from="lst"></span></span>
+                <span style="border:1px solid #AAA;margin-right:20px;">This is chkarray: <span style="color:blue;" pr_get_from="chkarray"></span></span>
                 <div style="width:400px;float:right;">
-                    A<input type="checkbox" value="A" pr_sync_with="lst"><br>
-                    B<input type="checkbox" value="B" pr_sync_with="lst"><br>
-                    C<input type="checkbox" value="C" pr_sync_with="lst">                    
-                    (pr_store_to lst)
+                    A<input type="checkbox" value="A" pr_sync_with="chkarray"><br>
+                    B<input type="checkbox" value="B" pr_sync_with="chkarray"><br>
+                    C<input type="checkbox" value="C" pr_sync_with="chkarray">                    
+                    (pr_store_to chkarray)
                 </div>
             </div>
 
