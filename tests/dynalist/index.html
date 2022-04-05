@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <script src="../../Widgets/Widgets.js"></script>
+        <script>
+            Users = [   { "id": "32164", "name": "Toto" },
+                        { "id": "78645", "name": "Tintin" },
+                        { "id": "49642", "name": "Milou" },
+                        { "id": "75244", "name": "Sheldon" },
+                        { "id": "45668", "name": "Leonard" },                           
+            ];
+
+            document.addEventListener('DOMContentLoaded', function () { 
+                Widgets.Path = '/js_widgets/Widgets/';
+                Widgets.loadWidget('DynaList', function() {
+                    usr_lst = new Widget( 'DynaList', { 
+                        'selector': '#listbox',
+                        'source': Users, 
+                        'listid':'usrlst', 
+                        'entry_id': 'id',
+                        'entry_label': 'name',
+                    });
+
+                });
+             });
+        </script>
+    </head>
+    <body>
+        LIST:
+        <div id="listbox" style="border: 1px solid blue;width: 30%;">Here comes the list...</div>
+        <p>
+            Once the list is displayed, try to sort it with:
+            <pre>usr_lst.data.sort((a,b) => ((a.name&lt;b.name) ? 1 : -1))</pre>
+        </p>
+    </body>
+</html>
