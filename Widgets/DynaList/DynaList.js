@@ -20,13 +20,31 @@ window.Widgets.DynaList = class{
         this.options = options;
         this.element = document.createElement('ul');
         this.element.classList.add(this.options.class);
-        this.element.id = this.options.id;
-        this.element.innerHTML = '<li pr_repeat_with="dynalist_'+this.options.id+'" style="display: none;" item_id="{pr_prop.'+options.entry_id+'}">{pr_prop.'+options.entry_label+'}</li>';
-        this.container = document.querySelector(options.selector);
+        this.element.id = this.options.listid;
+        this.element.innerHTML = '<li pr_repeat_with="dynalist_'+this.options.listid+'" style="display: none;" item_id="{pr_prop.'+options.entry_id+'}">{pr_prop.'+options.entry_label+'}</li>';
+        this.container = null;
+        if(options.hasOwnProperty('container')) {
+            this.container=options.container;
+            this.containerClass = this.options.listid+'_container';
+            this.container.className = this.containerClass
+            options.selector = '.'+this.containerClass;
+        } else if(options.hasOwnProperty('selector')) this.container = document.querySelector(options.selector);
+        if(this.container == null) {
+            console.warn('Could not instantiate DynaList on selector'+options.selector+' not found!');
+            return(null);
+        }
         this.container.innerHTML = '';
         this.container.append(this.element);
         this.reactable = new Widget('Picoreac',{'reactable': options.selector});
-        this.reactable.data['dynalist_'+this.options.id] = options.source;
-        this.data = this.reactable.data['dynalist_'+this.options.id];
+        // TODO: window[options.source] only works for global vars...find a more flexible mechanism (good luck to myself)
+        if(typeof(options.source)=='object') this.reactable.data['dynalist_'+this.options.listid] = options.source;
+        else if(typeof(options.source)=='string') this.reactable.data['dynalist_'+this.options.listid] = window[options.source];
+        this.data = this.reactable.data['dynalist_'+this.options.listid];
+    }
+
+    refresh(){
+        this.data = this.data;
     }
 }
+
+

@@ -114,7 +114,7 @@
                     <span style="background-color:#FF0">usr_lst = new Widget( 'DynaList', { </span>
                     <span style="background-color:#FF0">    'selector': '#listbox',</span>
                     <span style="background-color:#FF0">    'source': Users, </span>
-                    <span style="background-color:#FF0">    'id':'usrlst', </span>
+                    <span style="background-color:#FF0">    'listid':'usrlst', </span>
                     <span style="background-color:#FF0">    'entry_id': 'id',</span>
                     <span style="background-color:#FF0">    'entry_label': 'name',</span>
                     <span style="background-color:#FF0">});</span>
@@ -127,9 +127,10 @@
         <div class="api_meth">
             <div class="api_meth_params">Parameters:
                 <ul>
+                    <li><b>container</b>: list parent (takes precedence over selector if both present)</li>
                     <li><b>selector</b>: list parent selector</li>
                     <li><b>source</b>: the array containing the list elements</li>
-                    <li><b>id</b>: Both the DOM id of the &lt;ul&gt; and the suffix of the variable used in Picoreac</li>
+                    <li><b>listid</b>: Both the DOM id of the &lt;ul&gt; and the suffix of the variable used in Picoreac</li>
                     <li><b>entry_id</b>: Each &lt;li&gt; will have an "item_id" attribute, with the value of the entry_id named property for this array entry </li>
                     <li><b>entry_label</b>: The text of each &lt;li&gt; will picked from the value of the entry_label named property for this array entry </li>
                 </ul>
