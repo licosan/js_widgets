@@ -29,7 +29,7 @@ window.Widgets.WidgetTags = class{
                 var params= { 'container': node };
                 for(var att of node.attributes) if(att.nodeName!='type') params[att.nodeName] = att.nodeValue;             
                 var widget_instance =  new Widget(type, params)
-                self.widget_instances[widget_instance.containerClass] = widget_instance;
+                self.widget_instances[widget_instance.containerID] = widget_instance;
             });
         }
     }

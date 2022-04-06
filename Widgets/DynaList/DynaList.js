@@ -25,9 +25,9 @@ window.Widgets.DynaList = class{
         this.container = null;
         if(options.hasOwnProperty('container')) {
             this.container=options.container;
-            this.containerClass = this.options.listid+'_container';
-            this.container.className = this.containerClass
-            options.selector = '.'+this.containerClass;
+            this.containerID = this.options.listid+'_container';
+            this.container.id = this.containerID
+            options.selector = '#'+this.containerID;
         } else if(options.hasOwnProperty('selector')) this.container = document.querySelector(options.selector);
         if(this.container == null) {
             console.warn('Could not instantiate DynaList on selector'+options.selector+' not found!');
@@ -42,9 +42,6 @@ window.Widgets.DynaList = class{
         this.data = this.reactable.data['dynalist_'+this.options.listid];
     }
 
-    refresh(){
-        this.data = this.data;
-    }
 }
 
 

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body{
+                width: 60%;
+                margin: auto;
+                border-left: 1px dotted #777;
+                border-right: 1px dotted #777;
+                padding: 10px;
+                font-size:12px;             
+            }
+            h3{
+                text-decoration: underline;
+            }
+            div.api_meth{
+                margin-left: 30px;
+                border-bottom: 1px dotted #777;
+                padding: 0 0 15px 0;
+                width: 70%;
+            }
+            h4.api_meth{
+                margin: 5px 0 0 20px;
+                background-color: #ccc;
+                padding: 2px 0 2px 10px;
+                font-weight: normal;
+            } 
+            div.api_meth_params{
+                color:#070;
+                margin: 5px 0 0 0;
+            }
+            div.api_meth_params ul{
+                margin:0 0 0 0;
+            }
+            div.banner{
+                font-family: monospace;
+                font-weight: bold;
+                white-space: pre;
+                width:630px;
+                border-radius: 70px;
+                background-color: #DEA;
+                color: #070;
+                border: 4px double #070;
+                margin: auto;
+            }
+            div.codetype{
+                font-size: 12px;
+                background-color: #FFA;
+                width: 150px;
+                position: absolute;
+                top: -10px;
+                left: 10px;
+                border: 1px solid #AA0;
+                padding: 0 0 0 5px;
+                border-radius: 5px;
+                font-style: italic;
+                text-align: center;
+            }
+            div.code{
+                margin-top: 15px;
+                padding: 0px 0 10px 0;
+                position:relative;
+                font-family: monospace;
+                font-size:11px;
+                white-space: pre;
+                border:1px solid #AA0;
+                border-radius: 5px;
+                background-color:#FFD;
+            }
+            div.code b{
+                background-color: #FF0;
+            }
+            div.code i{
+                color: #080;
+                font-style: italic;
+            }
+            b.parag{
+                display:block;               
+                color:#00A;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="banner">
+             _       __                               ______
+            (  \    /  )____  ____    ___  ____  ____(__  __)__    ___  ___ 
+             \  \/\/  /(_  _)(  _ \  / __)( ___)(_  _)  )(  /__\  / __)/ __)
+              )      (  _)(_  )(_) )( (_-. )__)   )(    )( /(__)\( (_-.\__ \
+             (___/\___)(____)(____/  \___/(____) (__)  (__)__)(__)\___/(___/
+                                                                     By Nike
+                                                        
+        </div>
+        <h3>Summary</h3>
+        <p> WidgetTags implements the DOM <b>&lt;widget&gt;</b> tags.<br>
+            This lets you insert widgets from a DOM tag, instead of intantiating them programatically.<br>
+            Typical use cases arrises when receiving HTML templates from the server that shall include Widgets.<br>
+            This eliminates the need to do insertions from JS after rception & insertion of the markup.
+        </p>
+        <h3>Basic usage</h3>
+        <div class="code">
+            <div class="codetype">HTML</div>
+            &lt;body&gt;
+                LIST:
+                &lt;widget type="DynaList" source="Users" listid="usrlst" entry_id="id" entry_label="name"&gt;&lt;/widget&gt;
+            &lt;/body&gt;
+        </div>        
+        <div class="code">
+            <div class="codetype">Javascript</div>
+            <i>// Some example data...</i>
+            Users = [   { "id": "32164", "name": "Toto" },
+                        { "id": "78645", "name": "Tintin" },
+                        { "id": "49642", "name": "Milou" },
+                        { "id": "75244", "name": "Sheldon" },
+                        { "id": "45668", "name": "Leonard" },                           
+            ];
+
+            document.addEventListener('DOMContentLoaded', function () { 
+                Widgets.Path = '/js_widgets/Widgets/';
+                Widgets.loadWidget('WidgetTags', function() {
+                    var wt = new Widget( 'WidgetTags', {} ); <i>// Upon instantiation, the Dom will be scanned, and widget tags populated</i>
+                });
+             });
+        </div>    
+        <h3>WidgetTags API:</h3>
+        <div class="api_meth">
+            Just instantiate it without argument and it will immediately scan the body of the document.<br>
+
+        </div>
+
+        <h4 class="api_meth">WidgetTags.<b>scan</b>(selector)</h4>
+        <div class="api_meth">
+            Scan the under the Dom element(s) collected via selector.<br>
+            For each <b>&lt;widget&gt;</b> tag, the widget named in the attribute "type" will be loaded, instantiated, and the content of the <b>&lt;widget&gt;</b> tag populated accordingly.
+            <div class="api_meth_params">Parameters:
+                <ul>
+                    <li>selector: selector of the elements to be scanned</li>
+                </ul>
+            </div>
+        </div>    
+        
+        <div class="api_meth">
+            <div class="api_meth_params"Attributes of the <b>&lt;widget&gt;</b> tag attributes:
+                <ul>
+                    <li><b style="color:red;">type</b>: (mandatory) is the widget type name (the name of its JS class).</li>
+                    <li>Other attributes: are passed as parameters to the widget when instantiating the widget.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h3>Which widget types can be used ?</h3>
+        <p>Using this mechanism only makes sens for widgets creating actual markup.<br>
+           Such a widget shall therefore have the following features:
+           <ul>
+               <li>One of the instantiation parameters shall be <b style="color:red;">container</b>.<br>
+                It must be used as the DOM node that the widget will populate with its markup.<br>
+                If a <b>selector</b> parameter is also allowed for this purpose (as it is often the case), 
+                <b>container</b> shall take precedence if both were to be given.
+                </li>
+                <li>Upon instantiation, the widget shall assign a unique id to its container, <br>
+                    and expose a property <b style="color:red;">containerID</b> with the value of this id.<br>
+                    When a widget receives as parameter an id, the convention is to suffix it with "_container" for the container id.
+                </li>
+
+           </ul>
+        </p>
+ 
+
+    </body>
+</html>        
